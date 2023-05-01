@@ -1,0 +1,70 @@
+SIMULATION:
+  START: 21600
+  END: 36000
+  STEP_TIME: 2
+  TIME2FINISH: 1800
+
+REQUEST:
+  DATA:
+    TRAIN: './data/train'
+    VALIDATION: './data/validation'
+    TEST: './data/requests/test_num2688.csv'
+  SAMPLE_RATE: 1.0
+  CHECK_ITINERARY: False
+  CONSTRAINTS:
+    max_assign_time: 600
+    max_pickup_time: 600
+    max_travel_time_mul: 1.5
+    max_travel_dis_mul: 1.5
+  BEHAVIORS:
+    max_assign_time: 600
+    max_pickup_time: 900
+    cancel_prob_assign: 1.0
+    cancel_prob_pickup: 1.0
+    max_tol_vehicle_capacity: 2
+    max_tol_price: None
+
+VEHICLE:
+  DATA: False
+  NUM: 80
+  VELOCITY: 15
+  MAXCAPACITY: 2
+  PlanPathMethod: 'NearestFirst'
+  REPOSITION:
+    TYPE: True
+    METHOD: 'NearGrid'
+    
+ENVIRONMENT:
+  TYPE: 'CITY'
+  CITY:
+    RoadFile: './data/chengdu.graphml'
+    TravelTimeFile: None
+    TravelDisFile: None
+    X_GRID_NUM: 10
+    Y_GRID_NUM: 10
+  TOY:
+    NumNode: 21
+    DisPerLine: 500
+  CONSIDER_ITINERARY:
+    TYPE: True
+    METHOD: 'API'
+  CONSIDER_CONGESTION: True
+  REAL_TIME_UPDATE: False
+  MAXLNG: 104.17
+  MINLNG: 103.97
+  MAXLAT: 30.74
+  MINLAT: 30.59
+
+MODEL:
+  EPISODES: 500
+  LOCATION_EMBED_NUM: 10
+  TIME_EMBED_NUM: 3
+  DISCOUNT_FACTOR: 1.0
+  LEARNING_RATE: 1.e-4
+  BATCH_SIZE: 3
+  MEMORY_SIZE: 5000
+  TRAIN_FREQUENCY: 1
+  TIME_INTERVAL: 300
+  REPOSITION:
+    TYPE: False
+    METHOD: 'HotGrid'
