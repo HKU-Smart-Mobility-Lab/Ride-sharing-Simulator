@@ -3,11 +3,10 @@ A high-capacity ride-sharing simulator calibrated by real request datasets and r
 
 <div align="center">
     <img src="intro-images/Simulator_Architecture.jpg", width="700" alt><br>
-    Simulator Architecture
+    **Simulator Architecture**
 </div>
 
 ## Updating...
->>>>>>> feaa40df93a9524c4b3ea13184ca61bd998af4ec
 - [x] Implement dispatching and repositioning algorithms of ride-sharing and ride-sourcing
 - [x] Add traffic flow models to measure traffic congestion, speed, and carbon emissions
 - [x] Implement 2D visualization
@@ -21,7 +20,20 @@ A high-capacity ride-sharing simulator calibrated by real request datasets and r
 ``` bash
 pip install -r requirements.txt
 ```
-2. Download [Road Network](https://drive.google.com/file/d/1plVhAfyD0ZtiFEfIHL8HYrPuLczdtvH0/view?usp=share_link) into #Data# filefold
+2. Download [Road Network](https://drive.google.com/file/d/1plVhAfyD0ZtiFEfIHL8HYrPuLczdtvH0/view?usp=share_link) into **data** filefold
+
+## Simulation
+### Run the demo
+```bash
+python simulation.py --cfg ./config/test.yaml  --DrawResult True
+```
+
+### Simulation results
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=600 height=900 src="https://youtu.be/upBATpfreoI"></iframe>
 
 
-https://youtu.be/upBATpfreoI
+## Dispatching Algorithm
+<div align="center">
+    <img src="intro-images/DispatchingAlgorithm.jpg", width="700" alt><br>
+    **Dispatching Algorithm.**(a) Passengers are preassigned to vehicles within their matching areas; then (b) each vehicle will be potentially scheduled with multiple passengers. (c) The platform checks the shareability of each vehicle's potential passengers by planning the shortest routes and verifying pickup and detour time constraints, e.g., Passengers 1 and 2 can share Vehicle 1, but Passengers 2 and 3 cannot share Vehicle 2 due to the detour time constraint. (d) RTV-graph can be established to connect all potential trips (including one or more requests) to vehicles. (e) The optimal matching results are obtained via ILP. (f) Vehicles pick up and deliver passengers according to the matching results of (e) and the planned shortest routes of (c).
+</div>
