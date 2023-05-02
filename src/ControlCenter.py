@@ -18,31 +18,23 @@ See each object for detailed information
 '''
 class ControlCenter:
     def __init__(self,
-                environment,
-                start_timepoint,
-                end_timepoint,
-                step_time,
-                consider_itinerary = True, # Consider itinerary nodes or only origin and destination of requests
-                cfg =None
+                cfg,
+                environment
                 ):
         self.cfg = cfg
         self.environment = environment
-        self.start_timepoint = start_timepoint
-        self.end_timepoint = end_timepoint
-        self.step_time = step_time
-        self.total_steps = int((end_timepoint + self.cfg.SIMULATION.TIME2FINISH - start_timepoint) / step_time - 1)
-        self.simulation_steps = int((end_timepoint - start_timepoint) / step_time)
+        self.step_time = self.cfg.SIMULATION.STEP_TIME
+        self.start_timepoint = self.cfg.SIMULATION.START
+        self.end_timepoint = self.cfg.SIMULATION.END
+        self.total_steps = int((self.end_timepoint + self.cfg.SIMULATION.TIME2FINISH - self.start_timepoint) / self.step_time - 1)
+        self.simulation_steps = int((self.end_timepoint - self.start_timepoint) / self.step_time)
+        
+        self.consider_itinerary = self.cfg.ENVIRONMENT.CONSIDER_ITINERARY.TYPE
 
-        self.RTV_system = RTVSystem(environment = self.environment,
-                                    start_timepoint = start_timepoint,
-                                    end_timepoint = end_timepoint,
-                                    step_time = step_time,
-                                    consider_itinerary = consider_itinerary,
-                                    cfg = cfg
-                                    )
+        self.RTV_system = RTVSystem(cfg = cfg, environment = self.environment)
         self.evaluation_system = EvaluationSystem(cfg = cfg, environment=self.environment)
 
-        self.current_timepoint = start_timepoint
+        self.current_timepoint = self.start_timepoint
         self.step = 0
 
         # Initialize requests and vehicles, see class RTVSystem for detailed information
@@ -57,7 +49,7 @@ class ControlCenter:
                                         current_timepoint = self.current_timepoint,
                                         step_time = self.step_time,
                                         RTV_system = self.RTV_system,
-                                        consider_itinerary = consider_itinerary)
+                                        consider_itinerary = self.consider_itinerary)
 
         self.post_process_system = PostProcessSystem(vehicles = None,
                                                     requests = None,

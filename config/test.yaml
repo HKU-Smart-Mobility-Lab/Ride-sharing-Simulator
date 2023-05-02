@@ -10,6 +10,7 @@ REQUEST:
     VALIDATION: './data/validation'
     TEST: './data/requests/test_num2688.csv'
   SAMPLE_RATE: 1.0
+  POOLING_RATE: [1.0, 0.8, 0.6, 0.4, 0.2, 0.0]
   CHECK_ITINERARY: False
   CONSTRAINTS:
     max_assign_time: 600

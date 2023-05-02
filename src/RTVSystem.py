@@ -5,13 +5,9 @@ from .component.Request import Request
 from .utils.PlanPath import PlanPath
 from .component.VirtualRequest import VirtualRequest
 import random
-import pickle
 import heapq
-import itertools as it
 from tqdm import tqdm
 import numpy as np
-import time
-import math
 import pandas as pd
 
 '''
@@ -19,21 +15,23 @@ The subsystem of the control center that handles requests, vehicles and trips
 '''
 class RTVSystem:
     def __init__(self,
-                environment,
-                start_timepoint = 0,
-                end_timepoint = 3600,
-                step_time = 6,
-                consider_itinerary = True,
-                cfg = None):
+                cfg,
+                environment
+            ):
         self.cfg = cfg
         self.environment = environment
-        self.start_timepoint = start_timepoint
-        self.end_timepoint = end_timepoint
-        self.step_time = step_time
-        self.current_timepoint = start_timepoint
+        # simulation time
+        self.step_time = self.cfg.SIMULATION.STEP_TIME
+        self.start_timepoint = self.cfg.SIMULATION.START
+        self.end_timepoint = self.cfg.SIMULATION.END
+        self.current_timepoint = self.start_timepoint
         
-        self.consider_itinerary = consider_itinerary
-        
+        # The target area
+        self.lng_min, self.lng_max = cfg.ENVIRONMENT.MINLNG, cfg.ENVIRONMENT.MAXLNG
+        self.lat_min, self.lat_max = cfg.ENVIRONMENT.MINLAT, cfg.ENVIRONMENT.MAXLAT
+
+
+        self.consider_itinerary = self.cfg.ENVIRONMENT.CONSIDER_ITINERARY.TYPE
         # To accelerate the the simulation process, we don't consider itinerary nodes when we chenk constraints
         self.check_itinerary = self.cfg.REQUEST.CHECK_ITINERARY
 
@@ -95,6 +93,13 @@ class RTVSystem:
                 
                 # We sample requests according to the given sampling rate
                 if random.random() > self.cfg.REQUEST.SAMPLE_RATE:
+                    continue
+                
+                # split the road network
+                expand = 0
+                lng_u, lat_u, lng_v, lat_v = requests_raw['origin_lng'][idx], requests_raw['origin_lat'][idx], requests_raw['dest_lng'][idx], requests_raw['dest_lat'][idx]
+                if not (lng_u >= self.lng_min - expand and lng_u <= self.lng_max + expand and lat_u >= self.lat_min - expand and lat_u <= self.lat_max + expand
+                and lng_v >= self.lng_min - expand and lng_v <= self.lng_max + expand and lat_v >= self.lat_min - expand and lat_v <= self.lat_max + expand):
                     continue
                 
                 # Assign each request to a simulation step

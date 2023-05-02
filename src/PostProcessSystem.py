@@ -120,7 +120,7 @@ class PostProcessSystem:
         ax.set_xlim(lng_min, lng_max)
         ax.set_ylim(lat_min, lat_max)
 
-        x_major_locator=MultipleLocator(0.03)
+        x_major_locator=MultipleLocator(0.015)
         ax.xaxis.set_major_locator(x_major_locator)
 
         plt.xlabel('Longitude', fontsize = self.label_fs, fontproperties = self.fonttype)
@@ -351,7 +351,7 @@ class PostProcessSystem:
                 ax.add_patch(cir)
             # ride-poolings
             else:
-                plt.scatter(xr_p, yr_p, s = s, c = c_req_w, marker = '*', alpha=1)
+                plt.scatter(xr_p, yr_p, s = 4*s, c = c_req_w, marker = '*', alpha=1)
             
         # ax = self.DrawRequests(ax, self.requests, color = c_req_w)
         

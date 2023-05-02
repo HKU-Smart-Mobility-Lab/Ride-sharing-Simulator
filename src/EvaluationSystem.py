@@ -1,7 +1,6 @@
 from docplex.mp.model import Model  # type: ignore
 from docplex.mp.linear import Var  # type: ignore
 from typing import List, Dict, Tuple, Set, Any, Optional, Callable
-import random
 import numpy as np
 
 

@@ -111,12 +111,7 @@ def main():
         raise NotImplementedError
 
     # Initilize the control center
-    control_center = ControlCenter(environment = environment,
-                                    start_timepoint = start_timepoint,
-                                    end_timepoint = end_timepoint,
-                                    step_time = step_time,
-                                    consider_itinerary = consider_itinerary,
-                                    cfg = cfg)
+    control_center = ControlCenter(cfg=cfg, environment = environment)
 
     # Record the number of requests and vehicles
     total_steps = int((end_timepoint - start_timepoint) / step_time - 1)
@@ -150,7 +145,7 @@ def main():
         logger.info('The total travel distance of all vehicles (km): {}'.format(vehicles_results[3] / 1000))
 
 
-    pooling_rates = [0.5, 0.1, 0.2, 0.3, 0.4, 0.5]
+    pooling_rates = cfg.REQUEST.POOLING_RATE
     # simulation
     for pooling_rate in pooling_rates:
         # Load requests for test
