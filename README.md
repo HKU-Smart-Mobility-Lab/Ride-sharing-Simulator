@@ -3,7 +3,7 @@ A high-capacity ride-sharing simulator calibrated by real request datasets and r
 
 <div align="center">
     <img src="intro-images/Simulator_Architecture.jpg", width="700" alt><br>
-    **Simulator Architecture**
+    __Simulator Architecture__
 </div>
 
 ## Updating...
@@ -29,7 +29,7 @@ python simulation.py --cfg ./config/test.yaml  --DrawResult True
 ```
 
 ### Simulation results
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=600 height=900 src="https://youtu.be/upBATpfreoI"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=600 height=900 src="//youtu.be/upBATpfreoI"></iframe>
 
 
 ## Dispatching Algorithm
